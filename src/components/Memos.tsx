@@ -1,10 +1,17 @@
 import { useContext, useState } from 'react';
-import CarMemo from '../types/types';
+import { CarMemo } from '../types/types';
 import { useNavigate } from 'react-router-dom';
 import { CarContext } from '../context/carContext';
 
 const ImageCarousel = ({ images }: { images: string[] }) => {
   const [index, setIndex] = useState(0);
+  if (!images) {
+    return (
+      <div>
+        <p>No images for memo</p>
+      </div>
+    );
+  }
 
   const btnNext = () => {
     if (images[index + 1]) {
@@ -21,7 +28,7 @@ const ImageCarousel = ({ images }: { images: string[] }) => {
       <p className='text-center'>
         Pictures: {index + 1}/{images.length}
       </p>
-      <div className='flex flex-row justify-center items-center min-w-1/2 max-w-1/1'>
+      <div className='justify-center items-center flex flex-row min-w-8/10'>
         <button className='h-30 btn' onClick={btnPrev}>
           &lt;
         </button>
@@ -41,7 +48,7 @@ const ImageCarousel = ({ images }: { images: string[] }) => {
 const MemoCard = ({ memo }: { memo: CarMemo }) => {
   const nav = useNavigate();
   return (
-    <div className='flex flex-col flex-1 p-4 min-w-1/4 max-w-1/4 border-1 items-center'>
+    <div className='flex flex-col flex-1 p-4 border-1 min-w-40 justify-around items-center'>
       <h3>{memo.licensePlate}</h3>
       <p>
         Make: {memo.make} Model: {memo.model}
@@ -56,9 +63,9 @@ const MemoCard = ({ memo }: { memo: CarMemo }) => {
 };
 
 const Memos = () => {
-  const carMemos = useContext(CarContext);
+  const { carMemos } = useContext(CarContext);
   return (
-    <div className='bg-slate-800 p-10 flex flex-wrap'>
+    <div className='bg-slate-800 p-12 flex flex-wrap'>
       {carMemos.map((e) => (
         <MemoCard key={e.id} memo={e} />
       ))}

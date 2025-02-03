@@ -5,7 +5,7 @@ import { CarContext } from '../context/carContext';
 const EditMemo = () => {
   const { id } = useParams();
   const nav = useNavigate();
-  const carMemos = useContext(CarContext);
+  const { carMemos } = useContext(CarContext);
   const car = carMemos.find((e) => e.id === id);
 
   if (!car) {

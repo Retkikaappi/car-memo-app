@@ -3,12 +3,13 @@ import Memos from './components/Memos';
 import NewMemo from './components/NewMemo';
 import EditMemo from './components/EditMemo';
 import { useState } from 'react';
-import CarMemo from './types/types';
+import { CarMemo } from './types/types';
 import carMemoMock from './utils/carMemos';
 import { CarContext } from './context/carContext';
 
 function App() {
-  const [carMemos] = useState<CarMemo[]>(carMemoMock);
+  const [carMemos, setCarMemos] = useState<CarMemo[]>(carMemoMock);
+  const value = { carMemos, setCarMemos };
 
   return (
     <div>
@@ -25,7 +26,7 @@ function App() {
             </button>
           </NavLink>
         </div>
-        <CarContext.Provider value={carMemos}>
+        <CarContext.Provider value={value}>
           <Routes>
             <Route path='/' element={<Memos />} />
             <Route path='/newMemo' element={<NewMemo />} />
