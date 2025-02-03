@@ -1,8 +1,11 @@
 @import 'tailwindcss';
 
 @layer base {
-  button {
+  .btn {
     @apply bg-slate-700 py-1 px-2 m-1 rounded-xs transition hover:bg-slate-600;
+  }
+  .txt {
+    @apply bg-neutral-300 text-black m-1 p-1;
   }
 }
 

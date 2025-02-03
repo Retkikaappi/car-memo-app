@@ -1,7 +1,8 @@
 import CarMemo from '../types/types';
 
-const carMemos: CarMemo[] = [
+const carMemoMock: CarMemo[] = [
   {
+    id: 'A1B2',
     licensePlate: 'ABC-123',
     pictures: [
       'https://images.pexels.com/photos/244206/pexels-photo-244206.jpeg?auto=compress&cs=tinysrgb&w=400',
@@ -12,6 +13,7 @@ const carMemos: CarMemo[] = [
     description: 'Regular maintenance done. Needs new tires before winter.',
   },
   {
+    id: 'C3D4',
     licensePlate: 'XYZ-789',
     pictures: [
       'https://images.pexels.com/photos/1637859/pexels-photo-1637859.jpeg?auto=compress&cs=tinysrgb&w=400',
@@ -22,6 +24,7 @@ const carMemos: CarMemo[] = [
     description: 'Scratches on the right door. Oil changed last month.',
   },
   {
+    id: 'E5F6',
     licensePlate: 'JKL-456',
     pictures: [
       'https://images.pexels.com/photos/119435/pexels-photo-119435.jpeg?auto=compress&cs=tinysrgb&w=400',
@@ -31,6 +34,7 @@ const carMemos: CarMemo[] = [
     description: 'Check engine light on, needs diagnostics.',
   },
   {
+    id: 'G7H8',
     licensePlate: 'MNO-321',
     pictures: [
       'https://images.pexels.com/photos/2127733/pexels-photo-2127733.jpeg?auto=compress&cs=tinysrgb&w=400',
@@ -41,6 +45,7 @@ const carMemos: CarMemo[] = [
     description: 'New brake pads installed. Next service due in 10,000 km.',
   },
   {
+    id: 'I9J0',
     licensePlate: 'QWE-654',
     pictures: [
       'https://images.pexels.com/photos/1335077/pexels-photo-1335077.jpeg?auto=compress&cs=tinysrgb&w=400',
@@ -51,6 +56,7 @@ const carMemos: CarMemo[] = [
     description: 'Recently detailed. Slight oil leak spotted under the engine.',
   },
   {
+    id: 'K1L2',
     licensePlate: 'ABC-321',
     pictures: [
       'https://images.unsplash.com/photo-1602033960165-9cea185953eb?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHZlaGljbGV8ZW58MHx8MHx8fDA%3D',
@@ -62,4 +68,4 @@ const carMemos: CarMemo[] = [
   },
 ];
 
-export default carMemos;
+export default carMemoMock;
