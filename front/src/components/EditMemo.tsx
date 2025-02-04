@@ -17,7 +17,7 @@ const EditMemo = () => {
     );
   }
   return (
-    <div>
+    <div className='place-items-center'>
       <button className='btn' onClick={() => nav(-1)}>
         Go back
       </button>

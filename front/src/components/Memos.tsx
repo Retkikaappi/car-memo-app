@@ -25,20 +25,26 @@ const ImageCarousel = ({ images }: { images: string[] }) => {
     }
   };
   return (
-    <div className='border-1 border-blue-500'>
+    <div className='h-60 w-96 flex flex-col items-center'>
       <p className='text-center'>
         Pictures: {index + 1}/{images.length}
       </p>
-      <div className='justify-center items-center flex flex-row min-w-8/10'>
-        <button className='h-30 btn' onClick={btnPrev}>
+      <div className='flex justify-center items-center w-full h-full'>
+        <button
+          className={`h-10 btn ${images[index - 1] ? 'visible' : 'invisible'}`}
+          onClick={btnPrev}
+        >
           &lt;
         </button>
         <img
-          className='h-2/3 max-w-2/3'
+          className='h-52 w-64 object-contain'
           src={images[index]}
           onClick={() => window.open(images[index])}
         />
-        <button className='h-30 btn' onClick={btnNext}>
+        <button
+          className={`h-10 btn ${images[index + 1] ? 'visible' : 'invisible'}`}
+          onClick={btnNext}
+        >
           &gt;
         </button>
       </div>
@@ -49,14 +55,14 @@ const ImageCarousel = ({ images }: { images: string[] }) => {
 const MemoCard = ({ memo }: { memo: CarMemo }) => {
   const nav = useNavigate();
   return (
-    <div className='flex flex-col flex-1 p-4 border-1 min-w-40 justify-around items-center'>
+    <div className='flex flex-col p-4 border-1 min-w-40 max-w-100 justify-around items-center'>
       <h3>{memo.licensePlate}</h3>
       <p>
         Make: {memo.make} Model: {memo.model}
       </p>
       <p>{memo.description}</p>
       {<ImageCarousel images={memo.pictures} />}
-      <button className='btn' onClick={() => nav(`/editMemo/${memo.id}`)}>
+      <button className='btn mt-4' onClick={() => nav(`/editMemo/${memo.id}`)}>
         edit
       </button>
     </div>
@@ -86,7 +92,7 @@ const Memos = () => {
     );
   }
   return (
-    <div className='bg-slate-800 p-12 flex flex-wrap'>
+    <div className='bg-slate-800 p-12 flex gap-4 flex-wrap justify-center'>
       {data.map((e) => (
         <MemoCard key={e.id} memo={e} />
       ))}
