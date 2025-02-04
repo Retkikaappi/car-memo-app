@@ -1,11 +1,17 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import memoService from '../../services/memoService';
 import newCarSchema from '../utils/validateCarMemo';
 
 const NewMemo = () => {
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationKey: ['carMemos'],
+    mutationFn: (memo: FormData) => memoService.postMemo(memo),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['carMemos'] }),
+    onError: (err) => console.log('mutation error', err),
+  });
   const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    //use useQuery
 
     try {
       const formData = new FormData(e.currentTarget);
@@ -16,8 +22,7 @@ const NewMemo = () => {
         validCar.append(key, value)
       );
 
-      const resp = await memoService.postMemo(validCar);
-      console.log(resp);
+      mutation.mutate(validCar);
     } catch (e) {
       console.log('error', e);
     }
