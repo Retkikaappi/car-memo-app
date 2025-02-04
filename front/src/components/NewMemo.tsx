@@ -1,13 +1,15 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import memoService from '../../services/memoService';
 import newCarSchema from '../utils/validateCarMemo';
+import { useNavigate } from 'react-router-dom';
 
 const NewMemo = () => {
   const queryClient = useQueryClient();
+  const nav = useNavigate();
   const mutation = useMutation({
     mutationKey: ['carMemos'],
     mutationFn: (memo: FormData) => memoService.postMemo(memo),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['carMemos'] }),
+    onSuccess: () => queryClient.refetchQueries({ queryKey: ['carMemos'] }),
     onError: (err) => console.log('mutation error', err),
   });
   const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
@@ -23,6 +25,7 @@ const NewMemo = () => {
       );
 
       mutation.mutate(validCar);
+      nav('/');
     } catch (e) {
       console.log('error', e);
     }

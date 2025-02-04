@@ -13,7 +13,7 @@ function App() {
 
   return (
     <div>
-      <div className='border-1 m-10'>
+      <div className='border-1 m-10 min-w-xl'>
         <div className='fixed top-0 right-0 flex flex-col'>
           <NavLink to='/'>
             <button className='btn bg-blue-30 border-1 h-20 w-20 rounded-full'>

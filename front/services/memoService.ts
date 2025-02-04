@@ -1,6 +1,6 @@
 import { CarMemo } from '../src/types/types';
 
-const baseUrl = 'http://localhost:3001/api/carMemos';
+const baseUrl = '/api/carMemos';
 
 const getMemos = async (): Promise<CarMemo[]> => {
   const resp = await fetch(baseUrl);

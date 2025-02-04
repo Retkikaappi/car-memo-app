@@ -6,7 +6,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "tsc": "tsc",
     "lint": "eslint .",
-    "dev": "ts-node-dev src/index.ts"
+    "dev": "ts-node-dev src/index.ts",
+    "start": "node build/src/index.js"
   },
   "author": "",
   "license": "ISC",
@@ -31,3 +32,4 @@
     "zod": "^3.24.1"
   }
 }
+

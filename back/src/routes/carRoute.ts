@@ -24,7 +24,7 @@ router.post(
     }
     const newCar = carService.addNew({
       ...req.body,
-      pictures: [`http://localhost:3001/api/pictures/${req.file.filename}`],
+      pictures: [`http://192.168.1.15:3001/api/pictures/${req.file.filename}`],
     });
 
     resp.json(newCar);

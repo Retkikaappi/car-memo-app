@@ -56,13 +56,18 @@ const MemoCard = ({ memo }: { memo: CarMemo }) => {
   const nav = useNavigate();
   return (
     <div className='flex flex-col p-4 border-1 min-w-40 max-w-100 justify-around items-center'>
-      <h3>{memo.licensePlate}</h3>
-      <p>
-        Make: {memo.make} Model: {memo.model}
-      </p>
-      <p>{memo.description}</p>
+      <div className='pb-2 leading-6'>
+        <h3 className='font-bold'>{memo.licensePlate}</h3>
+        <p className='font-bold'>
+          {memo.make} {memo.model}
+        </p>
+        <p>{memo.description}</p>
+      </div>
       {<ImageCarousel images={memo.pictures} />}
-      <button className='btn mt-4' onClick={() => nav(`/editMemo/${memo.id}`)}>
+      <button
+        className='btn mt-4 w-30'
+        onClick={() => nav(`/editMemo/${memo.id}`)}
+      >
         edit
       </button>
     </div>
@@ -92,7 +97,7 @@ const Memos = () => {
     );
   }
   return (
-    <div className='bg-slate-800 p-12 flex gap-4 flex-wrap justify-center'>
+    <div className='bg-slate-800 p-12 flex gap-4 flex-wrap justify-center min-w-xl'>
       {data.map((e) => (
         <MemoCard key={e.id} memo={e} />
       ))}
