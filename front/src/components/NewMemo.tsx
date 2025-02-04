@@ -1,22 +1,26 @@
-import { NewCarMemo } from '../types/types';
+import memoService from '../../services/memoService';
+import newCarSchema from '../utils/validateCarMemo';
 
 const NewMemo = () => {
-  const handleSubmit = (e: React.SyntheticEvent) => {
+  const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const target = e.target as typeof e.target & {
-      licensePlate: { value: string };
-      make: { value: string };
-      model: { value: string };
-      description: { value: string };
-      pictures: { value: File[] };
-    };
-    const newCar: NewCarMemo = {
-      licensePlate: target.licensePlate.value,
-      make: target.make.value,
-      model: target.model.value,
-      description: target.description.value,
-      pictures: target.pictures.value,
-    };
+
+    //use useQuery
+
+    try {
+      const formData = new FormData(e.currentTarget);
+      const parsedCar = newCarSchema.parse(Object.fromEntries(formData));
+
+      const validCar = new FormData();
+      Object.entries(parsedCar).forEach(([key, value]) =>
+        validCar.append(key, value)
+      );
+
+      const resp = await memoService.postMemo(validCar);
+      console.log(resp);
+    } catch (e) {
+      console.log('error', e);
+    }
   };
 
   return (
@@ -36,7 +40,6 @@ const NewMemo = () => {
           className='p-4 m-4 bg-neutral-500'
           type='file'
           accept='image/*'
-          multiple
           name='pictures'
         />
 

@@ -3,7 +3,7 @@ export interface NewCarMemo {
   make: string;
   model: string;
   description: string;
-  pictures: File[];
+  pictures: File;
 }
 
 export interface CarMemo {

@@ -1,4 +1,4 @@
-import { CarMemo, NewCarMemo } from '../src/types/types';
+import { CarMemo } from '../src/types/types';
 
 const baseUrl = 'http://localhost:3001/api/carMemos';
 
@@ -10,13 +10,12 @@ const getMemos = async (): Promise<CarMemo[]> => {
   return json;
 };
 
-// const postMemo = async <NewCarMemo>(memo) => {
-//   const resp = await fetch(baseUrl, {
-//     method:'POST',
-//     headers:{
-//       'Content-Type': "formData"
-//     }
-//   })
-// }
+const postMemo = async (formData: FormData) => {
+  const resp = await fetch(baseUrl, {
+    method: 'POST',
+    body: formData,
+  });
+  return resp.json();
+};
 
-export default { getMemos };
+export default { getMemos, postMemo };

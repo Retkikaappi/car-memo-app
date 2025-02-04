@@ -1,8 +1,11 @@
 import express from 'express';
+
 import cors from 'cors';
 import carRouter from './routes/carRoute';
 
 const app = express();
+app.use(express.json());
+
 app.use(cors());
 app.get('/api/test', (_req, resp) => {
   resp.send('/api/test');
