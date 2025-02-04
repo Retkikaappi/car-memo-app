@@ -1,7 +1,8 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { CarMemo } from '../types/types';
 import { useNavigate } from 'react-router-dom';
-import { CarContext } from '../context/carContext';
+import { useQuery } from '@tanstack/react-query';
+import memoService from '../../services/memoService';
 
 const ImageCarousel = ({ images }: { images: string[] }) => {
   const [index, setIndex] = useState(0);
@@ -63,10 +64,21 @@ const MemoCard = ({ memo }: { memo: CarMemo }) => {
 };
 
 const Memos = () => {
-  const { carMemos } = useContext(CarContext);
+  const { data, isLoading } = useQuery({
+    queryKey: ['carMemos'],
+    queryFn: memoService.getMemos,
+    refetchOnMount: true,
+  });
+
+  if (isLoading) {
+    return <div>Loading</div>;
+  }
+  if (!data) {
+    return <div>No memos</div>;
+  }
   return (
     <div className='bg-slate-800 p-12 flex flex-wrap'>
-      {carMemos.map((e) => (
+      {data.map((e) => (
         <MemoCard key={e.id} memo={e} />
       ))}
     </div>

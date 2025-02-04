@@ -2,14 +2,14 @@ import { Routes, Route, NavLink } from 'react-router-dom';
 import Memos from './components/Memos';
 import NewMemo from './components/NewMemo';
 import EditMemo from './components/EditMemo';
-import { useState } from 'react';
-import { CarMemo } from './types/types';
-import carMemoMock from './utils/carMemos';
-import { CarContext } from './context/carContext';
+import { useQuery } from '@tanstack/react-query';
+import memoService from '../services/memoService';
 
 function App() {
-  const [carMemos, setCarMemos] = useState<CarMemo[]>(carMemoMock);
-  const value = { carMemos, setCarMemos };
+  useQuery({
+    queryKey: ['carMemos'],
+    queryFn: memoService.getMemos,
+  });
 
   return (
     <div>
@@ -26,13 +26,11 @@ function App() {
             </button>
           </NavLink>
         </div>
-        <CarContext.Provider value={value}>
-          <Routes>
-            <Route path='/' element={<Memos />} />
-            <Route path='/newMemo' element={<NewMemo />} />
-            <Route path='/editMemo/:id' element={<EditMemo />} />
-          </Routes>
-        </CarContext.Provider>
+        <Routes>
+          <Route path='/' element={<Memos />} />
+          <Route path='/newMemo' element={<NewMemo />} />
+          <Route path='/editMemo/:id' element={<EditMemo />} />
+        </Routes>
       </div>
     </div>
   );

@@ -1,12 +1,13 @@
-import { useContext } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 import { useNavigate, useParams } from 'react-router-dom';
-import { CarContext } from '../context/carContext';
-
+import { CarMemo } from '../types/types';
 const EditMemo = () => {
   const { id } = useParams();
   const nav = useNavigate();
-  const { carMemos } = useContext(CarContext);
-  const car = carMemos.find((e) => e.id === id);
+  const queryClient = useQueryClient();
+  const car = queryClient
+    .getQueryData<CarMemo[]>(['carMemos'])
+    ?.find((e) => e.id === id);
 
   if (!car) {
     return (
