@@ -67,14 +67,23 @@ const Memos = () => {
   const { data, isLoading } = useQuery({
     queryKey: ['carMemos'],
     queryFn: memoService.getMemos,
-    refetchOnMount: true,
+    refetchOnMount: false,
   });
 
   if (isLoading) {
-    return <div>Loading</div>;
+    return (
+      <div className='place-items-center p-4'>
+        <p>Loading</p>
+        <div className='spinner'></div>
+      </div>
+    );
   }
   if (!data) {
-    return <div>No memos</div>;
+    return (
+      <div className='place-items-center p-4'>
+        <p>No memos</p>
+      </div>
+    );
   }
   return (
     <div className='bg-slate-800 p-12 flex flex-wrap'>

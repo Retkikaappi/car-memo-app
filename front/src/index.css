@@ -7,5 +7,8 @@
   .txt {
     @apply bg-neutral-300 text-black m-1 p-1;
   }
+  .spinner {
+    @apply border-4 m-4 border-r-blue-600 h-10 w-10 rounded-full animate-spin;
+  }
 }
 

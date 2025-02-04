@@ -27,11 +27,11 @@ const NewMemo = () => {
     <div>
       <form className='flex flex-col p-12 items-center' onSubmit={handleSubmit}>
         <label>License plate</label>
-        <input className='txt' name='licensePlate' />
+        <input className='txt' name='licensePlate' required />
         <label>Make</label>
-        <input className='txt' name='make' />
+        <input className='txt' name='make' required />
         <label>Model</label>
-        <input className='txt' name='model' />
+        <input className='txt' name='model' required />
 
         <label>Description</label>
         <textarea className='txt w-80' name='description' />
@@ -41,6 +41,7 @@ const NewMemo = () => {
           type='file'
           accept='image/*'
           name='pictures'
+          required
         />
 
         <button className='btn'>Submit</button>

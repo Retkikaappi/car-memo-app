@@ -3,9 +3,9 @@ const MAX_FILE_SIZE = 1024 * 1024 * 5;
 const IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
 
 const newCarSchema = z.object({
-  licensePlate: z.string(),
-  make: z.string(),
-  model: z.string(),
+  licensePlate: z.string().min(1, 'Licenseplate is required'),
+  make: z.string().min(1, 'Make is required'),
+  model: z.string().min(1, 'Model is required'),
   description: z.string(),
   pictures: z
     .custom<File>()
