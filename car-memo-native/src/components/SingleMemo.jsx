@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Pressable,
   Alert,
+  Linking,
 } from 'react-native';
 import Text from './Text';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -106,7 +107,7 @@ const SingleMemo = () => {
             <Text>Delete</Text>
           </Pressable>
         </View>
-        <Text fontSize='heading' fontWeight='bold'>
+        <Text style={{ marginTop: 40 }} fontSize='heading' fontWeight='bold'>
           {item.licensePlate}
         </Text>
         {item.make && (
@@ -120,11 +121,18 @@ const SingleMemo = () => {
         {item.pictures.length > 0 && (
           <View>
             {item.pictures.map((e, index) => (
-              <Image
-                key={`picture_${index}`}
-                source={{ uri: e }}
-                style={{ width: 210, height: 210, margin: 10, borderRadius: 5 }}
-              />
+              <Pressable onPress={() => Linking.openURL(e)}>
+                <Image
+                  key={`picture_${index}`}
+                  source={{ uri: e }}
+                  style={{
+                    width: 210,
+                    height: 210,
+                    margin: 10,
+                    borderRadius: 5,
+                  }}
+                />
+              </Pressable>
             ))}
           </View>
         )}

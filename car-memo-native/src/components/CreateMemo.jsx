@@ -121,7 +121,7 @@ const MemoForm = ({ images, setImages }) => {
           return {
             uri: e.uri,
             type: getMimeType(ext),
-            name: `image-${Date.now()}-${index}.${ext}}`,
+            name: `image-${Date.now()}-${index}.${ext}`,
           };
         }),
       ]);
@@ -233,7 +233,7 @@ const CreateMemo = () => {
             return {
               uri: e.uri,
               type: getMimeType(ext),
-              name: `image-${Date.now()}-${index}.${ext}}`,
+              name: `image-${Date.now()}-${index}.${ext}`,
             };
           })
         )
