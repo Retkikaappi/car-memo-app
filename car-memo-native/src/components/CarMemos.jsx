@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     padding: 10,
     alignItems: 'center',
     margin: 'auto',
-    backgroundColor: theme.colors.foreground,
+    borderRadius: 5,
   },
 });
 
@@ -28,9 +28,8 @@ const Card = ({ item }) => {
         />
       ) : (
         <Image
-          source={{
-            uri: 'https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg',
-          }}
+          style={{ width: 100, height: 100, borderRadius: 5 }}
+          source={require('../../assets/No-Image-Placeholder.svg')}
         />
       )}
     </Pressable>

@@ -1,10 +1,18 @@
-import { ScrollView, Image, View, StyleSheet, Pressable } from 'react-native';
+import {
+  ScrollView,
+  Image,
+  View,
+  StyleSheet,
+  Pressable,
+  Alert,
+} from 'react-native';
 import Text from './Text';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Constants from 'expo-constants';
 import theme from '../theme';
 import { useNavigate, useParams } from 'react-router-native';
 import memoService from '../services/memoService';
+import Toast from 'react-native-toast-message';
 
 const styles = StyleSheet.create({
   container: {
@@ -27,13 +35,10 @@ const styles = StyleSheet.create({
     borderColor: theme.colors.buttonB,
   },
   deleteBtn: {
-    position: 'absolute',
-    top: -65,
-    right: -178,
     backgroundColor: 'red',
-    width: 70,
-    height: 70,
-    borderRadius: 35,
+    width: 50,
+    height: 50,
+    borderRadius: 25,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -70,17 +75,34 @@ const SingleMemo = () => {
     );
   }
 
+  const handleDelete = () => {
+    Alert.alert('Varmista', `Poistetaanko memo ${item.licensePlate}`, [
+      {
+        text: 'Ei',
+        onPress: () => console.log('cancelled'),
+      },
+      {
+        text: 'Kyllä',
+        onPress: () => {
+          mutation.mutate(memoId),
+            Toast.show({
+              type: 'success',
+              text1: 'Memo deleted',
+              position: 'bottom',
+            });
+        },
+      },
+    ]);
+  };
+
   return (
     <ScrollView
       contentContainerStyle={{ flexGrow: 1 }}
       showsVerticalScrollIndicator={false}
     >
       <View style={styles.container}>
-        <View>
-          <Pressable
-            onPress={() => mutation.mutate(memoId)}
-            style={styles.deleteBtn}
-          >
+        <View style={{ position: 'absolute', right: 10, top: -70 }}>
+          <Pressable onPress={handleDelete} style={styles.deleteBtn}>
             <Text>Delete</Text>
           </Pressable>
         </View>

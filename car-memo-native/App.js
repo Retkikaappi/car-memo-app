@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import Main from './src/components/Main';
 import { NativeRouter } from 'react-router-native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-
+import Toast from 'react-native-toast-message';
 const queryClient = new QueryClient();
 
 export default function App() {
@@ -15,6 +15,7 @@ export default function App() {
         </NativeRouter>
       </QueryClientProvider>
       <StatusBar style='auto' />
+      <Toast />
     </>
   );
 }

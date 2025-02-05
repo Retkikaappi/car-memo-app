@@ -18,6 +18,7 @@ import getMimeType from '../../utils/getMimeType';
 import memoService from '../services/memoService';
 import { useNavigate } from 'react-router-native';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import Toast from 'react-native-toast-message';
 
 const styles = StyleSheet.create({
   container: {
@@ -53,8 +54,22 @@ const MemoForm = ({ images, setImages }) => {
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: memoService.createNew,
-    onSuccess: () => queryClient.refetchQueries({ queryKey: ['carMemos'] }),
-    onError: (e) => console.log('error', e),
+    onSuccess: () => {
+      queryClient.refetchQueries({ queryKey: ['carMemos'] });
+      Toast.show({
+        type: 'success',
+        text1: 'Succesfully created a memo',
+        position: 'bottom',
+      });
+    },
+    onError: (e) => {
+      console.log('error', e),
+        Toast.show({
+          type: 'error',
+          text1: 'Error creating a new memo',
+          position: 'bottom',
+        });
+    },
   });
 
   const formik = useFormik({

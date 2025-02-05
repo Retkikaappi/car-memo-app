@@ -31,7 +31,7 @@ const NavBar = () => {
       }}
     >
       <Link style={styles.link} to='/'>
-        <Text>Home</Text>
+        <Text>Koti</Text>
       </Link>
       <Link
         style={
@@ -41,7 +41,7 @@ const NavBar = () => {
         }
         to='/createMemo'
       >
-        <Text>New</Text>
+        <Text>Uusi</Text>
       </Link>
     </View>
   );
