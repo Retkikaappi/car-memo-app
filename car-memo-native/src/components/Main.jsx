@@ -7,6 +7,7 @@ import CarMemos from './CarMemos';
 import CreateMemo from './CreateMemo';
 import { useQuery } from '@tanstack/react-query';
 import memoService from '../services/memoService';
+import SingleMemo from './SingleMemo';
 const Main = () => {
   const { data } = useQuery({
     queryKey: ['carMemos'],
@@ -18,6 +19,7 @@ const Main = () => {
       <Routes>
         <Route path='/' element={<CarMemos data={data} />} />
         <Route path='/createMemo' element={<CreateMemo />} />
+        <Route path='/:memoId' element={<SingleMemo />} />
       </Routes>
     </View>
   );

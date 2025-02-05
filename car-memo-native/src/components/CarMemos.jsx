@@ -1,7 +1,9 @@
-import { FlatList, Image, StyleSheet, View } from 'react-native';
+import { FlatList, Image, Pressable, StyleSheet, View } from 'react-native';
 import Text from './Text';
 import Constants from 'expo-constants';
 import theme from '../theme';
+import { useNavigate } from 'react-router-native';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 const styles = StyleSheet.create({
   card: {
@@ -13,8 +15,9 @@ const styles = StyleSheet.create({
 });
 
 const Card = ({ item }) => {
+  const nav = useNavigate();
   return (
-    <View style={styles.card}>
+    <Pressable style={styles.card} onPress={() => nav(`/${item.id}`)}>
       <Text fontWeight='bold' fontSize='subhead'>
         {item.licensePlate}
       </Text>
@@ -30,11 +33,13 @@ const Card = ({ item }) => {
           }}
         />
       )}
-    </View>
+    </Pressable>
   );
 };
 
 const CarMemos = ({ data }) => {
+  const queryClient = useQueryClient();
+  queryClient.refetchQueries({ queryKey: ['carMemos'] });
   return (
     <FlatList
       style={{

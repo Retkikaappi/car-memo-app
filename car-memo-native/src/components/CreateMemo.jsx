@@ -14,11 +14,14 @@ import theme from '../theme';
 import { useFormik } from 'formik';
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
+import getMimeType from '../../utils/getMimeType';
+import memoService from '../services/memoService';
+import { useNavigate } from 'react-router-native';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
     margin: 10,
     marginTop: 64,
     top: Constants.statusBarHeight,
@@ -46,6 +49,13 @@ const styles = StyleSheet.create({
 
 const MemoForm = ({ images, setImages }) => {
   const [additional, setAdditional] = useState(false);
+  const nav = useNavigate();
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: memoService.createNew,
+    onSuccess: () => queryClient.refetchQueries({ queryKey: ['carMemos'] }),
+    onError: (e) => console.log('error', e),
+  });
 
   const formik = useFormik({
     initialValues: {
@@ -54,9 +64,23 @@ const MemoForm = ({ images, setImages }) => {
       model: '',
       description: '',
     },
-    onSubmit: (e) => {
-      console.log(e);
-      console.log(images);
+    onSubmit: async (e) => {
+      const formdata = new FormData();
+      Object.entries(e).forEach(([key, value]) => formdata.append(key, value));
+      images.forEach(({ uri, name, type }) => {
+        formdata.append('pictures', {
+          uri,
+          name,
+          type,
+        });
+      });
+      try {
+        await mutation.mutate(formdata, {
+          onSuccess: nav('/'),
+        });
+      } catch (e) {
+        console.log('error ', e);
+      }
     },
   });
 
@@ -67,24 +91,39 @@ const MemoForm = ({ images, setImages }) => {
       return;
     }
     const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.Images,
+      mediaTypes: ['images'],
       quality: 1,
+      base64: false,
+      allowsEditing: false,
+      allowsMultipleSelection: true,
     });
 
     if (!result.canceled) {
-      setImages(images.concat(result.assets[0].uri));
+      setImages([
+        ...images,
+        ...result.assets.map((e, index) => {
+          const ext = e.uri.split('.').pop();
+          return {
+            uri: e.uri,
+            type: getMimeType(ext),
+            name: `image-${Date.now()}-${index}.${ext}}`,
+          };
+        }),
+      ]);
     }
   };
-  console.log(images.length);
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
+    <ScrollView
+      contentContainerStyle={{ flexGrow: 1 }}
+      showsVerticalScrollIndicator={false}
+    >
       {images.length > 0 && (
         <View>
           {images.map((e, index) => (
             <Image
               key={`picture_${index}`}
-              source={{ uri: e }}
+              source={{ uri: e.uri }}
               style={{ width: 210, height: 210, margin: 10, borderRadius: 5 }}
             />
           ))}
@@ -144,7 +183,10 @@ const MemoForm = ({ images, setImages }) => {
       <Pressable style={styles.button} onPress={handleImage}>
         <Text>Avaa kuvat</Text>
       </Pressable>
-      <Pressable onPress={formik.handleSubmit} style={styles.button}>
+      <Pressable
+        onPress={formik.handleSubmit}
+        style={{ ...styles.button, marginBottom: 150 }}
+      >
         <Text>Lisää</Text>
       </Pressable>
     </ScrollView>
@@ -163,11 +205,24 @@ const CreateMemo = () => {
     }
 
     const result = await ImagePicker.launchCameraAsync({
-      quality: 1,
+      mediaTypes: 'images',
+      base64: false,
+      allowsEditing: false,
     });
 
     if (!result.canceled) {
-      setImages(images.concat(result.assets[0].uri));
+      setImages(
+        images.concat(
+          result.assets.map((e, index) => {
+            const ext = e.uri.split('.').pop();
+            return {
+              uri: e.uri,
+              type: getMimeType(ext),
+              name: `image-${Date.now()}-${index}.${ext}}`,
+            };
+          })
+        )
+      );
       setModal(false);
     }
   };

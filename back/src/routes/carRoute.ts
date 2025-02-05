@@ -31,4 +31,34 @@ router.post(
   }
 );
 
+router.post(
+  '/mobile',
+  upload.array('pictures', 10),
+  (req: Request<unknown, unknown, NewCarMemo>, resp: Response) => {
+    if (!req.files || (Array.isArray(req.files) && req.files.length === 0)) {
+      resp.status(400).json({ error: 'No images provided' });
+    }
+    const paths = (req.files as Express.Multer.File[]).map(
+      (file) => `http://192.168.1.15:3001/api/pictures/${file.filename}`
+    );
+
+    const newCar = carService.addNew({
+      ...req.body,
+      pictures: paths,
+    });
+
+    resp.json(newCar);
+  }
+);
+
+router.delete('/mobile/:id', (req, resp) => {
+  if (!req.params) {
+    resp.status(400).json({ error: 'no params' });
+  }
+
+  const removed = carService.removeOne(req.params);
+
+  resp.json(removed);
+});
+
 export default router;

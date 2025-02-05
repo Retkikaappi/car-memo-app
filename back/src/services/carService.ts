@@ -15,4 +15,11 @@ const addNew = (memo: NewCarMemo) => {
   return newMemo;
 };
 
-export default { addNew };
+const removeOne = ({ id }: { id: string }) => {
+  const index = carMemoMock.findIndex((e) => e.id === id);
+
+  const removed = carMemoMock.splice(index, 1);
+  return removed;
+};
+
+export default { addNew, removeOne };
