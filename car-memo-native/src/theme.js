@@ -4,6 +4,8 @@ const theme = {
     textSecondary: 'gray',
     foreground: '#404040',
     background: '#1C1917',
+    button: '#3B82F6',
+    buttonB: '#2563EB',
   },
   fontSize: {
     body: 14,
