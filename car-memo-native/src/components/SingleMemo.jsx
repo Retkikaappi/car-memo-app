@@ -123,7 +123,7 @@ const SingleMemo = () => {
             {item.pictures.map((e, index) => (
               <Pressable onPress={() => Linking.openURL(e)}>
                 <Image
-                  key={`picture_${index}`}
+                  key={`pictures_${index}`}
                   source={{ uri: e }}
                   style={{
                     width: 210,
